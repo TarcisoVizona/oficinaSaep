@@ -5,6 +5,40 @@ window.addEventListener("load", async () => {
   listarServicos(servico);
 });
 
+async function editar(id) {
+  const servico = await fetch(`http://localhost:3000/historicoServicos/${id}`);
+  const servicoParams = await servico.json();
+  const datas = {
+    dataentrada_servico: prompt(
+      "Data de entrada do serviço",
+      servicoParams.dataentrada_servico,
+    ),
+    descricao_servico: prompt("Descrição", servicoParams.descricao_servico),
+    tipo_servico: prompt("Tipo de serviço", servicoParams.tipo_servico),
+    status_servico: prompt("Status ", servicoParams.status_servico),
+    valor_servico: prompt("Valor", servicoParams.valor_servico),
+  };
+
+  const resposta = await fetch(`http://localhost:3000/atualizarServico/${id}`, {
+    method: "PUT",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(datas),
+  });
+
+  if (resposta.status == 200) {
+    return window.location.reload();
+  }
+}
+
+async function deletar(id) {
+  const resposta = await fetch(`http://localhost:3000/deleteServico/${id}`, {
+    method: "DELETE",
+  });
+  if (resposta.status == 200) {
+    return window.location.reload();
+  }
+}
+
 async function listarServicos(servico) {
   const vazia = document.querySelector("#vazia");
 

@@ -12,6 +12,17 @@ rotas.get("/clientes", async (req, res) => {
   }
 });
 
+rotas.get("/clientes/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const resposta = await sql`SELECT * FROM clientes WHERE id_cliente = ${id}`;
+    return res.status(200).json(resposta[0]);
+  } catch (error) {
+    console.log("Erro ao visualizar histórico de serviços:" + error);
+  }
+});
+
 rotas.get("/historicoServicos", async (req, res) => {
   try {
     const resposta = await sql`SELECT * FROM servicos`;
@@ -21,10 +32,32 @@ rotas.get("/historicoServicos", async (req, res) => {
   }
 });
 
+rotas.get("/historicoServicos/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const resposta = await sql`SELECT * FROM servicos WHERE id_servico = ${id}`;
+    return res.status(200).json(resposta[0]);
+  } catch (error) {
+    console.log("Erro ao visualizar histórico de serviços:" + error);
+  }
+});
+
 rotas.get("/veiculos", async (req, res) => {
   try {
     const resposta = await sql`SELECT * FROM veiculos`;
     return res.status(200).json(resposta);
+  } catch (error) {
+    console.log("Erro ao visualizar histórico de serviços:" + error);
+  }
+});
+
+rotas.get("/veiculos/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const resposta = await sql`SELECT * FROM veiculos WHERE id_carro = ${id}`;
+    return res.status(200).json(resposta[0]);
   } catch (error) {
     console.log("Erro ao visualizar histórico de serviços:" + error);
   }
@@ -165,8 +198,6 @@ rotas.put("/atualizarServico/:id", async (req, res) => {
     tipo_servico,
     status_servico,
     valor_servico,
-    id_usuario,
-    id_veiculo,
   } = req.body;
 
   try {
@@ -175,9 +206,7 @@ dataentrada_servico = ${dataentrada_servico},
 descricao_servico = ${descricao_servico},
 tipo_servico = ${tipo_servico},
 status_servico = ${status_servico},
-valor_Servico = ${valor_servico},
-id_usuario = ${id_usuario},
-id_veiculo = ${id_veiculo}
+valor_Servico = ${valor_servico}
 WHERE id_servico = ${id}
 `;
 
@@ -190,14 +219,8 @@ WHERE id_servico = ${id}
 
 rotas.put("/atualizarVeiculo/:id", async (req, res) => {
   const { id } = req.params;
-  const {
-    placa_carro,
-    marca_carro,
-    modelo_carro,
-    ano_carro,
-    cor_carro,
-    id_cliente,
-  } = req.body;
+  const { placa_carro, marca_carro, modelo_carro, ano_carro, cor_carro } =
+    req.body;
 
   try {
     const resposta = await sql`UPDATE veiculos SET 
@@ -205,8 +228,7 @@ placa_carro = ${placa_carro},
 marca_carro = ${marca_carro},
 modelo_carro = ${modelo_carro},
 ano_carro = ${ano_carro},
-cor_carro = ${cor_carro},
-id_cliente = ${id_cliente}
+cor_carro = ${cor_carro}
 WHERE id_carro = ${id}
 `;
 
@@ -214,6 +236,42 @@ WHERE id_carro = ${id}
   } catch (error) {
     console.log(error);
     return res.status(400).json("Não foi possível atualizar veículo!");
+  }
+});
+
+rotas.delete("/deleteCliente/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await sql`DELETE FROM clientes WHERE id_cliente = ${id}`;
+    return res.status(200).json("Cliente deletado com sucesso!");
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json("Não foi possível deletar cliente!");
+  }
+});
+
+rotas.delete("/deleteServico/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await sql`DELETE FROM servicos WHERE id_servico = ${id}`;
+    return res.status(200).json("Serviço deletado com sucesso!");
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json("Não foi possível deletar serviço!");
+  }
+});
+
+rotas.delete("/deleteVeiculo/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await sql`DELETE FROM veiculos WHERE id_carro = ${id}`;
+    return res.status(200).json("Carro deletado com sucesso!");
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json("Não foi possível deletar carro!");
   }
 });
 
