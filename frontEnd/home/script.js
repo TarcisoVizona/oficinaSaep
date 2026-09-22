@@ -122,7 +122,7 @@ btnCadVeiculo.addEventListener("click", async () => {
       modelo_carro: modelo,
       ano_carro: ano,
       cor_carro: cor,
-      id_usuario: cliente,
+      id_cliente: cliente,
     }),
   });
 
@@ -130,7 +130,6 @@ btnCadVeiculo.addEventListener("click", async () => {
     alert("Veículo cadastrado com sucesso!");
     return window.location.reload();
   } else {
-    console.log(data);
     return alert("Não foi possível cadastrar veículo!");
   }
 });

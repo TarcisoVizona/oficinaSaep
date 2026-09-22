@@ -73,7 +73,7 @@ rotas.post("/cadastrarVeiculos", async (req, res) => {
     modelo_carro,
     ano_carro,
     cor_carro,
-    id_usuario,
+    id_cliente,
   } = req.body;
 
   try {
@@ -84,18 +84,19 @@ rotas.post("/cadastrarVeiculos", async (req, res) => {
     modelo_carro,
     ano_carro,
     cor_carro,
-    id_usuario
+    id_cliente
     ) VALUES (
     ${placa_carro},
     ${marca_carro},
     ${modelo_carro},
     ${ano_carro},
     ${cor_carro},
-    ${id_usuario}
+    ${id_cliente}
     )`;
 
     return res.status(201).json("Veículo cadastrado com sucesso!");
   } catch (error) {
+    console.log(error);
     return res.status(500).json("Erro ao cadastrar veículo!");
   }
 });
@@ -132,6 +133,87 @@ rotas.post("/cadastrarServicos", async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json(`Erro ao cadastrar serviço! ${error}`);
+  }
+});
+
+rotas.put("/atualizarCliente/:id", async (req, res) => {
+  const { id } = req.params;
+  const { nome_cliente, cpf_cliente, telefone_cliente, endereco_cliente } =
+    req.body;
+
+  try {
+    const resposta = await sql`UPDATE clientes SET 
+nome_cliente = ${nome_cliente}, 
+cpf_cliente = ${cpf_cliente},
+telefone_cliente = ${telefone_cliente},
+endereco_cliente = ${endereco_cliente}
+WHERE id_cliente = ${id}
+`;
+
+    return res.status(200).json("Cliente atualizado com sucesso!");
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json("Não foi possível atualizar cliente!");
+  }
+});
+
+rotas.put("/atualizarServico/:id", async (req, res) => {
+  const { id } = req.params;
+  const {
+    dataentrada_servico,
+    descricao_servico,
+    tipo_servico,
+    status_servico,
+    valor_servico,
+    id_usuario,
+    id_veiculo,
+  } = req.body;
+
+  try {
+    const resposta = await sql`UPDATE servicos SET 
+dataentrada_servico = ${dataentrada_servico}, 
+descricao_servico = ${descricao_servico},
+tipo_servico = ${tipo_servico},
+status_servico = ${status_servico},
+valor_Servico = ${valor_servico},
+id_usuario = ${id_usuario},
+id_veiculo = ${id_veiculo}
+WHERE id_servico = ${id}
+`;
+
+    return res.status(200).json("Serviço atualizado com sucesso!");
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json("Não foi possível atualizar serviço!");
+  }
+});
+
+rotas.put("/atualizarVeiculo/:id", async (req, res) => {
+  const { id } = req.params;
+  const {
+    placa_carro,
+    marca_carro,
+    modelo_carro,
+    ano_carro,
+    cor_carro,
+    id_cliente,
+  } = req.body;
+
+  try {
+    const resposta = await sql`UPDATE veiculos SET 
+placa_carro = ${placa_carro}, 
+marca_carro = ${marca_carro},
+modelo_carro = ${modelo_carro},
+ano_carro = ${ano_carro},
+cor_carro = ${cor_carro},
+id_cliente = ${id_cliente}
+WHERE id_carro = ${id}
+`;
+
+    return res.status(200).json("Veículo atualizado com sucesso!");
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json("Não foi possível atualizar veículo!");
   }
 });
 
