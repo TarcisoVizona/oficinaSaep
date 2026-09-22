@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Home</title>
+  </head>
+  <body>
+    <div class="container">
+      <header id="header">
+        <div id="navzinho">
+          <h2 id="clientesNav">Clientes</h2>
+          <h2 id="servicosNav">Histórico de Serviços</h2>
+          <h2 id="veiculosNav">Veículos</h2>
+        </div>
+        <div></div>
+        <div id="headerDiv">
+          <img src="./icons/perfil.svg" alt="perfil" class="img" id="perfil" />
+          <img src="./icons/logout.svg" alt="logout" class="img" id="logout" />
+        </div>
+      </header>
+      <div id="divForms">
+        <div id="formCliente">
+          <h3>Clientes</h3>
+          <input
+            type="text"
+            placeholder="Nome do cliente..."
+            id="inputNomeCliente"
+          />
+          <input
+            type="text"
+            placeholder="Cpf do cliente..."
+            id="inputCpfCliente"
+          />
+          <input
+            type="text"
+            placeholder="Telefone do cliente..."
+            id="inputTelefoneCliente"
+          />
+          <input
+            type="text"
+            placeholder="Endereço do cliente..."
+            id="inputEnderecoCliente"
+          />
+          <button id="btnCadCliente">Cadastrar cliente</button>
+        </div>
+        <div id="formVeiculo">
+          <h3>Serviços</h3>
+          <input
+            type="date"
+            placeholder="Data de entrada..."
+            id="inputDataServico"
+          />
+          <input type="text" placeholder="Descrição..." id="inputDescServico" />
+          <input
+            type="text"
+            placeholder="Tipo de serviço..."
+            id="inputTipoServico"
+          />
+          <input
+            type="text"
+            placeholder="Valor do serviço..."
+            id="inputValorServico"
+          />
+          <input
+            type="number"
+            placeholder="Cliente..."
+            id="inputClienteServico"
+          />
+          <input type="number" placeholder="Veículo..." id="inputIdServico" />
+          <button id="btnCadServico">Cadastrar serviço</button>
+        </div>
+        <div id="formServico">
+          <h3>Veículos</h3>
+          <input
+            type="text"
+            placeholder="Placa do carro..."
+            id="inputPlacaCarro"
+          />
+          <input
+            type="text"
+            placeholder="Marca do carro..."
+            id="inputMarcaCarro"
+          />
+          <input
+            type="text"
+            placeholder="Modelo do carro..."
+            id="inputModeloCarro"
+          />
+          <input type="text" placeholder="Ano do carro..." id="inputAnoCarro" />
+          <input type="text" placeholder="Cor do carro..." id="inputCorCarro" />
+          <input type="text" placeholder="Cliente..." id="inputClienteCarro" />
+          <button id="btnCadVeiculo">Cadastrar veículo</button>
+        </div>
+      </div>
+      <footer></footer>
+    </div>
+  </body>
+  <script src="script.js"></script>
+</html>

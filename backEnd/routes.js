@@ -3,9 +3,27 @@ import sql from "./database.js";
 
 const rotas = express.Router();
 
+rotas.get("/clientes", async (req, res) => {
+  try {
+    const resposta = await sql`SELECT * FROM clientes`;
+    return res.status(200).json(resposta);
+  } catch (error) {
+    console.log("Erro ao visualizar histórico de serviços:" + error);
+  }
+});
+
 rotas.get("/historicoServicos", async (req, res) => {
   try {
     const resposta = await sql`SELECT * FROM servicos`;
+    return res.status(200).json(resposta);
+  } catch (error) {
+    console.log("Erro ao visualizar histórico de serviços:" + error);
+  }
+});
+
+rotas.get("/veiculos", async (req, res) => {
+  try {
+    const resposta = await sql`SELECT * FROM veiculos`;
     return res.status(200).json(resposta);
   } catch (error) {
     console.log("Erro ao visualizar histórico de serviços:" + error);
@@ -20,7 +38,7 @@ rotas.post("/loginUsuario", async (req, res) => {
       await sql`SELECT * FROM usuarios where email_usuario = ${email} AND senha_usuario = ${senha}`;
 
     if (usuario.length != 0) {
-      return res.status(200).json(usuario[0]);
+      return res.status(200).json(usuario);
     } else {
       return res.status(401).json("Email ou senha incorretos!");
     }
@@ -112,7 +130,8 @@ rotas.post("/cadastrarServicos", async (req, res) => {
 
     return res.status(201).json("Serviço cadastrado com sucesso!");
   } catch (error) {
-    return res.status(500).json("Erro ao cadastrar serviço!");
+    console.log(error);
+    return res.status(500).json(`Erro ao cadastrar serviço! ${error}`);
   }
 });
 

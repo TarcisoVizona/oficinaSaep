@@ -1,0 +1,11 @@
+#veiculos {
+    height: 70px;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    gap: 40px;
+
+    border: solid black 2px;
+}
